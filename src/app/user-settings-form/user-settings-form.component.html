@@ -1,0 +1,92 @@
+
+
+<div *ngIf="toggled">
+    <mat-card-title>User Settings</mat-card-title>
+    <form class="form-container">
+        <mat-form-field>
+            <input matInput type="text" id="name" name="name" placeholder="Name">
+        </mat-form-field>
+        <mat-checkbox check="true">Check me!</mat-checkbox>
+
+        <button mat-raised-button color="primary" class="save">
+            <mat-icon>save</mat-icon> Save
+        </button>
+    </form>
+</div>
+<div *ngIf="!toggled" style="width: 400px;">
+    <div class="container">
+        <h2>User Settings</h2>
+        <form #form="ngForm" (ngSubmit)="submit(form)">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" name="name" class="form-control" 
+                        [(ngModel)]="viewModelUserSettings.name"
+                        required #nameField="ngModel"
+                        [class.field-error]="form.submitted && form.invalid"
+                        (blur)="onBlur(nameField)">
+                <div [hidden]="!form.submitted || form.valid"
+                        class="alert alert-danger">
+                    Enter a name
+                </div>
+            </div>
+
+            <div class="form-check form-group">
+                <input type="checkbox" id="emailOffers" class="form-check-input" 
+                        name="emailOffers" [(ngModel)]="viewModelUserSettings.emailOffers">
+                <label class="form-check-label" for="emailOffers">
+                    Email Special Offers
+                </label>
+            </div>
+
+            <div class="form-group">
+                <h6>User Interface Styles</h6>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="interfaceStyle" 
+                            id="lightInterface" value="light" [(ngModel)]="viewModelUserSettings.interfaceStyle">
+                    <label class="form-check-label" for="lightInterface">
+                      Light
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="interfaceStyle" 
+                            id="mediumInterface" value="medium" [(ngModel)]="viewModelUserSettings.interfaceStyle">
+                    <label class="form-check-label" for="mediumInterface">
+                        Medium
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="interfaceStyle" 
+                            id="darkInterface" value="dark" [(ngModel)]="viewModelUserSettings.interfaceStyle">
+                    <label class="form-check-label" for="darkInterface">
+                        Dark
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="subscriptionType">Subscription Type</label>
+                <select id="subscriptionType" class="form-control" 
+                        name="subscriptionType" [(ngModel)]="viewModelUserSettings.subscriptionType">
+                    <option *ngFor="let type of subscriptionTypes | async">{{ type }}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea id="notes" class="form-control" rows="3"
+                            name="notes" [(ngModel)]="viewModelUserSettings.notes"></textarea>
+            </div>
+
+            <div [hidden]="!postError" class="alert alert-danger">
+                {{ postErrorMessage }}
+            </div>
+
+            <button class="btn btn-outline-primary">Send</button>
+        </form>
+    </div>
+</div>
+<br/>
+<mat-divider style="width: 400px;"></mat-divider>
+<br/>
+<mat-slide-toggle [checked]="toggled" (change)="toggleChanged($event)">Enable Material</mat-slide-toggle>
+

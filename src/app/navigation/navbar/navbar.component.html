@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <nav class="nav-container">
+            <button [routerLink]="['/home']" mat-button>
+                <mat-icon>home</mat-icon> Home
+            </button>
+            <a [routerLink]="['/user-settings']" class="settings" mat-button>Settings</a>
+            <a [routerLink]="['/login']" class="login" mat-button>Login</a>
+        </nav>
+    </mat-toolbar-row>
+</mat-toolbar>
